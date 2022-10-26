@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax-Form</title>
+</head>
+
+<style>
+    table {
+        margin-top: 20px;
+    }
+    
+    table,
+    th,
+    td {
+        border: 1px solid black;
+        border-radius: 5px;
+        line-height: 25px;
+        padding: 5px;
+    }
+    
+    tr:nth-child(even) {
+        background-color:#528AAE;
+    }
+</style>
+
+<body>
+    <center>
+        <h2>WELCOME TO SERVER..</h2>
+        <button class="btn" style="background: #ADD8E6;">Details Here!</button>
+        <div class="result">
+            <table>
+                <tr>
+                    <th>Id</th>
+                    <th>E-mail</th>
+                </tr>
+                <tbody id="mine"></tbody>
+            </table>
+        </div>
+    </center>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js" integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8" crossorigin="anonymous"></script>
+
+    <script>
+        $(".btn").on('click', function() {
+            console.log("Be ready to move to server");
+            get();
+        });
+
+        function get() {
+
+            $.ajax({
+                type: "GET",
+                url: "https://reqres.in/api/users?page=2",
+                success: function(saec) {
+                    //console.log(saec);
+
+                    const myJSON = JSON.stringify(saec);
+
+                    const obj = JSON.parse(myJSON);
+
+                    if (saec) {
+                        console.log(obj.data.length);
+                    }
+                    var ruff = '';
+
+                    for (var i = 0; i < obj.data.length; i++) {
+                        ruff += "<tr>";
+                        ruff += "<td>" + obj.data[i].id + "</td> " + " <td>" + obj.data[i].email + "</td>";
+                        ruff += "</tr>";
+                    }
+                    /* console.log(ruff);
+
+                   $('.result').show();
+                    $(".result").html(ruff);*/
+
+                    document.getElementById("mine").innerHTML = ruff;
+
+                }
+
+            });
+        }
+    </script>
+</body>
+
+</html>
